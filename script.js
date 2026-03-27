@@ -31,7 +31,10 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
         let primeiraAba = workbook.SheetNames[0];
         let sheet = workbook.Sheets[primeiraAba];
 
-        let json = XLSX.utils.sheet_to_json(sheet);
+        let json = XLSX.utils.sheet_to_json(sheet, {
+    raw: false,
+    dateNF: "yyyy-mm-dd"
+});
 
         gerarXML(json, header);
     };
