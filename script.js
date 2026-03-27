@@ -136,10 +136,23 @@ function limparNumero(valor) {
 }
 function formatarValor(valor) {
     return parseFloat(valor || 0).toFixed(2);
-}
+}    
 function formatarDataISO(data) {
+
     if (!data) return "";
+
+    // 🔹 Caso seja número (Excel)
+    if (typeof data === "number") {
+        let excelEpoch = new Date(1899, 11, 30);
+        let result = new Date(excelEpoch.getTime() + data * 86400000);
+        return result.toISOString().split("T")[0];
+    }
+
+    // 🔹 Caso seja string/data normal
     let d = new Date(data);
+
+    if (isNaN(d)) return "";
+
     return d.toISOString().split("T")[0];
 }
 function formatarDataBR(data) {
