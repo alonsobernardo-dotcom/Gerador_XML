@@ -92,10 +92,39 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
                     <docOrigem>
                         <codIdentEmit>${linha["UG Emitente"]}</codIdentEmit>
                         <dtEmis>${formatarDataISO(linha["Data Ateste"])}</dtEmis>
-                        <numDocOrigem>${linha["Documento"] || ""}</numDocOrigem>
+                        <numDocOrigem>${linha["Número Doc Origem"] || ""}</numDocOrigem>
                         <vlr>${valor}</vlr>
                     </docOrigem>
                 </dadosBasicos>
+
+                <pco>
+    <numSeqItem>1</numSeqItem>
+    <codSit>${linha["Situação"] || "DSP061"}</codSit>
+    <codUgEmpe>${linha["UG Emitente"]}</codUgEmpe>
+
+    <pcoItem>
+        <numSeqItem>1</numSeqItem>
+        <numEmpe>${linha["Empenho"] || ""}</numEmpe>
+        <codSubItemEmpe>${linha["Subitem"] || "01"}</codSubItemEmpe>
+        <vlr>${valor}</vlr>
+        <numClassA>${linha["Conta VPD"] || ""}</numClassA>
+    </pcoItem>
+</pco>
+
+<centroCusto>
+    <numSeqItem>1</numSeqItem>
+    <codCentroCusto>${linha["Centro de Custo"] || "CC-GENERICO"}</codCentroCusto>
+    <mesReferencia>${linha["Mês"] || "01"}</mesReferencia>
+    <anoReferencia>${linha["Ano"] || header.anoReferencia}</anoReferencia>
+    <codUgBenef>${linha["UG Emitente"]}</codUgBenef>
+    <codSIORG>${linha["SIORG"] || ""}</codSIORG>
+
+    <relPcoItem>
+        <numSeqPai>1</numSeqPai>
+        <numSeqItem>1</numSeqItem>
+        <vlr>${valor}</vlr>
+    </relPcoItem>
+</centroCusto>
 
                 <dadosPgto>
                     <codCredorDevedor>${cpf}</codCredorDevedor>
