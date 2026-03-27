@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador XML SIAFI</title>
+</head>
+<body>
+
+<h2>Gerar XML para SIAFI</h2>
+
+<h3>Dados do Header</h3>
+
+<label>Código Layout:</label><br>
+<input type="text" id="codigoLayout" value="DH001"><br><br>
+
+<label>Data Geração:</label><br>
+<input type="date" id="dataGeracao"><br><br>
+
+<label>Sequencial:</label><br>
+<input type="number" id="sequencial" value="1"><br><br>
+
+<label>Ano Referência:</label><br>
+<input type="number" id="anoReferencia"><br><br>
+
+<label>UG Responsável:</label><br>
+<input type="text" id="ugResponsavel"><br><br>
+
+<label>CPF Responsável:</label><br>
+<input type="text" id="cpfResponsavel"><br><br>
+
+<input type="file" id="arquivo" accept=".xlsx">
+
+<br><br>
+<button onclick="processar()">Gerar XML</button>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
