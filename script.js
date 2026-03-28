@@ -201,3 +201,10 @@ function baixarXML(conteudo) {
 
     link.click();
 }
+
+function baixarModelo() {
+    let link = document.createElement("a");
+    link.href = "modelo_OBPIX.xls";
+    link.download = "modelo_OBPIX.xls";
+    link.click();
+}
