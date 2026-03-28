@@ -130,11 +130,11 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
                     <codCredorDevedor>${cpf}</codCredorDevedor>
                     <vlr>${valor}</vlr>
                     <predoc>
-                        <txtObser>${linha["Observação"] || ""}</txtObser>
+                        <txtObser>${linha["Observação Pré-Doc OB"] || ""}</txtObser>
                         <txtChPix>${cpf}</txtChPix>
                         <predocOB>
                             <codTipoOB>OBPIX</codTipoOB>
-                            <codCredorDevedor>}${cpf}</codCredorDevedor>
+                            <codCredorDevedor>${cpf}</codCredorDevedor>
 
                             <numDomiBancPgto>
                                 <banco>002</banco>
@@ -167,7 +167,7 @@ function limparNumero(valor) {
     return valor.toString().replace(/\D/g, "");
 }
 function formatarValor(valor) {
-    return parseFloat(valor || 0).toFixed(2);
+    return parseFloat(valor || 0).toString();
 }    
 function formatarDataISO(data) {
 
