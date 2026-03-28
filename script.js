@@ -43,14 +43,14 @@ if (!siorg) {
     dateNF: "yyyy-mm-dd"
 });
 
-        gerarXML(json, header);
+        gerarXML(json, header, siorg);
     };
 
     reader.readAsArrayBuffer(file);
 }
 
 
-    function gerarXML(dados, header) {
+    function gerarXML(dados, header, siorg)  {
 
     let xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sb:arquivo xmlns:ns2="http://services.docHabil.cpr.siafi.tesouro.fazenda.gov.br/" xmlns:sb="http://www.tesouro.gov.br/siafi/submissao">
