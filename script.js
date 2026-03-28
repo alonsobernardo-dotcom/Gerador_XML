@@ -22,6 +22,13 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
     return;
 }
 
+let siorg = document.getElementById("siorg").value;
+
+if (!siorg) {
+    alert("Informe o código SIORG!");
+    return;
+}
+
     let reader = new FileReader();
 
     reader.onload = function(e) {
@@ -117,7 +124,7 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
     <mesReferencia>${linha["Mês"] || "01"}</mesReferencia>
     <anoReferencia>${linha["Ano"] || header.anoReferencia}</anoReferencia>
     <codUgBenef>${linha["UG Emitente"]}</codUgBenef>
-    <codSIORG>${linha["SIORG"] || ""}</codSIORG>
+    <codSIORG>${siorg}</codSIORG>
 
     <relPcoItem>
         <numSeqPai>1</numSeqPai>
