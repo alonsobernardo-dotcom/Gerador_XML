@@ -142,7 +142,7 @@ if (!siorg) {
                         <predocOB>
                             <codTipoOB>OBPIX</codTipoOB>
                             <codCredorDevedor>${cpf}</codCredorDevedor>
-                            <txtChPix>${cpf}</txtChPix>
+                            <txtChavePix>${cpf}</txtChavePix>
 
                             <numDomiBancPgto>
                                 <banco>002</banco>
