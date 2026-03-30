@@ -49,6 +49,63 @@ if (!siorg) {
     reader.readAsArrayBuffer(file);
 }
 
+function gerarPredocOB(linha, cpf) {
+
+    let tipoOB = linha["Tipo OB"] || "OBPIX";
+
+    if (tipoOB === "OBC") {
+
+        // 🔒 Validação mínima
+        if (!linha["Banco"] || !linha["Agência"] || !linha["Conta"]) {
+            throw new Error("OBC exige banco, agência e conta!");
+        }
+
+        return `
+        <predocOB>
+            <codTipoOB>OBC</codTipoOB>
+            <codCredorDevedor>${cpf}</codCredorDevedor>
+
+            <numDomiBancFavo>
+                <banco>${linha["Banco"]}</banco>
+                <agencia>${linha["Agência"]}</agencia>
+                <conta>${linha["Conta"]}</conta>
+            </numDomiBancFavo>
+
+            <numDomiBancPgto>
+                <conta>UNICA</conta>
+            </numDomiBancPgto>
+
+            <txtProcesso>${linha["Processo"] || ""}</txtProcesso>
+        </predocOB>
+        `;
+    }
+
+    if (tipoOB === "OBPIX") {
+
+        if (!linha["Credor DH"]) {
+    throw new Error("OBPIX exige chave Pix (Credor DH)!");
+}
+
+        return `
+        <predocOB>
+            <codTipoOB>OBPIX</codTipoOB>
+            <codCredorDevedor>${cpf}</codCredorDevedor>
+
+            <txtChavePix>${cpf}</txtChavePix>
+
+            <numDomiBancPgto>
+                <banco>002</banco>
+                <conta>PAGINST</conta>
+            </numDomiBancPgto>
+
+            <txtProcesso>${linha["Processo"] || ""}</txtProcesso>
+        </predocOB>
+        `;
+    }
+
+    throw new Error("Tipo OB inválido: " + tipoOB);
+}
+
 
     function gerarXML(dados, header, siorg)  {
 
@@ -69,7 +126,8 @@ if (!siorg) {
 
     let contador = 0;
 
-    dados.forEach(linha => {
+    dados.forEach((linha, index) => {
+    try {
 
         if (!linha["Valor DH"]) return;
 
@@ -138,25 +196,17 @@ if (!siorg) {
                     <vlr>${valor}</vlr>
                     <predoc>
                         <txtObser>${linha["Observação Pré-Doc OB"] || ""}</txtObser>
-                        
-                        <predocOB>
-                            <codTipoOB>OBPIX</codTipoOB>
-                            <codCredorDevedor>${cpf}</codCredorDevedor>
-                            <txtChavePix>${cpf}</txtChavePix>
-
-                            <numDomiBancPgto>
-                                <banco>002</banco>
-                                <conta>PAGINST</conta>
-                            </numDomiBancPgto>
-
-                            <txtProcesso>${linha["Processo"] || ""}</txtProcesso>
-                        </predocOB>
+                        ${gerarPredocOB(linha, cpf)}
+                         
                     </predoc>
                 </dadosPgto>
 
             </ns2:CprDhCadastrar>
         </sb:detalhe>
 `;
+} catch (erro) {
+        alert(`Erro na linha ${index + 2}: ${erro.message}`);
+    }
     });
 
     xml += `
