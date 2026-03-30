@@ -138,10 +138,11 @@ if (!siorg) {
                     <vlr>${valor}</vlr>
                     <predoc>
                         <txtObser>${linha["Observação Pré-Doc OB"] || ""}</txtObser>
-                        <txtChPix>${cpf}</txtChPix>
+                        
                         <predocOB>
                             <codTipoOB>OBPIX</codTipoOB>
                             <codCredorDevedor>${cpf}</codCredorDevedor>
+                            <txtChPix>${cpf}</txtChPix>
 
                             <numDomiBancPgto>
                                 <banco>002</banco>
