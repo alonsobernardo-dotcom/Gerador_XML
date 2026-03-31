@@ -48,6 +48,12 @@ body {
     margin-bottom: 20px;
 }
 
+.right h4 {
+    margin-bottom: 10px;
+    font-size: 10px;
+    text-align: center ;
+}
+
 label {
     font-size: 12px;
     font-weight: bold;
