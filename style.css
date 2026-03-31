@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0a3d62, #3c6382);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 900px;
+}
+
+.card {
+    display: flex;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* LADO ESQUERDO */
+.left {
+    width: 40%;
+    background: #1e3799;
+    color: white;
+    padding: 40px;
+}
+
+.left h1 {
+    margin: 0;
+    font-size: 40px;
+}
+
+.left p {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* LADO DIREITO */
+.right {
+    width: 60%;
+    padding: 30px;
+}
+
+.right h2 {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* BOTÕES */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.primary {
+    background: #1e3799;
+    color: white;
+}
+
+.primary:hover {
+    background: #0c2461;
+}
+
+.secondary {
+    background: #dcdde1;
+}
+
+.secondary:hover {
+    background: #c8d6e5;
+}

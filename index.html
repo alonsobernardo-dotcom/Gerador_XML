@@ -2,41 +2,60 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>XML com OBPIX</title>
+    <title>Gerador OBPIX - SIAFI</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Gerador de XML para SIAFI (OBPIX)</h2>
+<div class="container">
 
-<h3>Cabeçalho (Header)</h3>
+    <div class="card">
 
-<label>Código Layout:</label><br>
-<input type="text" id="codigoLayout" value="DH001"><br><br>
+        <!-- LADO ESQUERDO -->
+        <div class="left">
+            <h1>Gerador XML</h1>
+            <p>
+                Geração de XML para exportação de pagamentos no SIAFI. Suporta OBC e OBPIX.
+            </p>
+        </div>
 
-<label>Data Geração:</label><br>
-<input type="date" id="dataGeracao"><br><br>
+        <!-- LADO DIREITO -->
+        <div class="right">
 
-<label>Sequencial:</label><br>
-<input type="number" id="sequencial" value="1"><br><br>
+            <h2>Preencha os dados abaixo:</h2>
 
-<label>Ano Referência:</label><br>
-<input type="number" id="anoReferencia"><br><br>
+            <label>Código Layout</label>
+            <input type="text" id="codigoLayout" value="DH001">
 
-<label>UG Responsável:</label><br>
-<input type="text" id="ugResponsavel"><br><br>
+            <label>Data Geração</label>
+            <input type="date" id="dataGeracao">
 
-<label>CPF Responsável:</label><br>
-<input type="text" id="cpfResponsavel"><br><br>
+            <label>Sequencial</label>
+            <input type="number" id="sequencial" value="1">
 
-<label for="siorg">Código SIORG:</label><br>
-<input type="text" id="siorg"><br><br>
+            <label>Ano Referência</label>
+            <input type="number" id="anoReferencia">
 
-<input type="file" id="arquivo" accept=".xlsx">
+            <label>UG Responsável</label>
+            <input type="text" id="ugResponsavel">
 
-<br><br>
-<button onclick="processar()">Gerar XML</button><br><br><br><br><br><br><br><br><br><br>
+            <label>CPF Responsável</label>
+            <input type="text" id="cpfResponsavel">
 
-<button onclick="baixarModelo()">Baixar modelo de planilha</button>
+            <label>SIORG</label>
+            <input type="text" id="siorg">
+
+            <label>Planilha</label>
+            <input type="file" id="arquivo">
+
+            <button class="primary" onclick="processar()">Gerar XML</button>
+            <button class="secondary" onclick="baixarModelo()">Baixar Modelo</button>
+
+        </div>
+
+    </div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="script.js"></script>

@@ -246,9 +246,15 @@ function formatarDataISO(data) {
     return d.toISOString().split("T")[0];
 }
 function formatarDataBR(data) {
-    let d = new Date(data);
-    return d.toLocaleDateString("pt-BR");
+
+    if (!data) return "";
+
+    // Evita problema de fuso
+    let partes = data.split("-"); // yyyy-mm-dd
+
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
+
 function baixarXML(conteudo) {
 
     let blob = new Blob([conteudo], { type: "application/xml" });
