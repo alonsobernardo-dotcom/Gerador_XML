@@ -268,7 +268,7 @@ function baixarXML(conteudo) {
 
 function baixarModelo() {
     let link = document.createElement("a");
-    link.href = "modelo_OBPIX.xls";
-    link.download = "modelo_OBPIX.xls";
+    link.href = "modelo_OBPIX.xlsx";
+    link.download = "modelo_OBPIX.xlsx";
     link.click();
 }
