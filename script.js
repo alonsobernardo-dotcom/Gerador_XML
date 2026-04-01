@@ -1,3 +1,17 @@
+function validarCampo(id) {
+    let campo = document.getElementById(id);
+
+    if (!campo.value) {
+        campo.classList.add("erro");
+        campo.classList.remove("ok");
+        return false;
+    }
+
+    campo.classList.remove("erro");
+    campo.classList.add("ok");
+    return true;
+}
+
 function processar() {
 
     let fileInput = document.getElementById("arquivo");
@@ -22,12 +36,7 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
     return;
 }
 
-let siorg = document.getElementById("siorg").value;
 
-if (!siorg) {
-    alert("Informe o código SIORG!");
-    return;
-}
 
     let reader = new FileReader();
 
@@ -43,11 +52,24 @@ if (!siorg) {
     dateNF: "yyyy-mm-dd"
 });
 
-        gerarXML(json, header, siorg);
+        gerarXML(json, header);
     };
 
     reader.readAsArrayBuffer(file);
+
+    if (!validarCampo("ugResponsavel") || 
+    !validarCampo("cpfResponsavel") )
+     {
+
+    document.getElementById("status").innerText = "Preencha os campos obrigatórios";
+    return;
+
+    document.getElementById("status").innerText = "⏳ Gerando XML...";
+
+    document.getElementById("status").innerText = "✅ XML gerado com sucesso!";
 }
+}
+    
 
 function gerarPredocOB(linha, cpf) {
 
@@ -107,7 +129,7 @@ function gerarPredocOB(linha, cpf) {
 }
 
 
-    function gerarXML(dados, header, siorg)  {
+    function gerarXML(dados, header)  {
 
     let xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sb:arquivo xmlns:ns2="http://services.docHabil.cpr.siafi.tesouro.fazenda.gov.br/" xmlns:sb="http://www.tesouro.gov.br/siafi/submissao">
@@ -182,7 +204,7 @@ function gerarPredocOB(linha, cpf) {
     <mesReferencia>${linha["Mês"] || "01"}</mesReferencia>
     <anoReferencia>${linha["Ano"] || header.anoReferencia}</anoReferencia>
     <codUgBenef>${linha["UG Emitente"]}</codUgBenef>
-    <codSIORG>${siorg}</codSIORG>
+    <codSIORG>${linha["SIORG"]}</codSIORG>
 
     <relPcoItem>
         <numSeqPai>1</numSeqPai>
@@ -272,3 +294,24 @@ function baixarModelo() {
     link.download = "modelo_OBPIX.xlsx";
     link.click();
 }
+
+
+let dropzone = document.getElementById("dropzone");
+let fileInput = document.getElementById("arquivo");
+
+dropzone.addEventListener("click", () => fileInput.click());
+
+dropzone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropzone.style.borderColor = "#0c326f";
+});
+
+dropzone.addEventListener("dragleave", () => {
+    dropzone.style.borderColor = "#aaa";
+});
+
+dropzone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    fileInput.files = e.dataTransfer.files;
+    dropzone.innerText = e.dataTransfer.files[0].name;
+});
