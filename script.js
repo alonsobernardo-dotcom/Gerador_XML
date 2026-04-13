@@ -23,6 +23,8 @@ function processar() {
     }
 
 
+
+
     let header = {
     codigoLayout: document.getElementById("codigoLayout").value,
     dataGeracao: document.getElementById("dataGeracao").value,
@@ -35,6 +37,11 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
     alert("Preencha os dados do header!");
     return;
 }
+
+
+    let layout = header.codigoLayout;
+
+    
 
 
 
@@ -52,7 +59,13 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
     dateNF: "yyyy-mm-dd"
 });
 
-        gerarXML(json, header);
+       if (layout === "CH001") {
+    gerarXML_CH001(json, header);
+    } else if (layout === "DH001") {
+    gerarXML_DH(json, header); 
+    } else {
+    alert("Layout não suportado!");
+}
     };
 
     reader.readAsArrayBuffer(file);
@@ -68,6 +81,77 @@ if (!header.ugResponsavel || !header.cpfResponsavel) {
 
     document.getElementById("status").innerText = "✅ XML gerado com sucesso!";
 }
+}
+
+function gerarXML_CH001(dados, header) {
+
+    let xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sb:arquivo xmlns:ns2="http://services.tabelas.siafi.tesouro.fazenda.gov.br/" 
+            xmlns:sb="http://www.tesouro.gov.br/siafi/submissao">
+
+    <sb:header>
+        <sb:codigoLayout>CH001</sb:codigoLayout>
+        <sb:dataGeracao>${formatarDataBR(header.dataGeracao)}</sb:dataGeracao>
+        <sb:sequencialGeracao>${header.sequencial}</sb:sequencialGeracao>
+        <sb:anoReferencia>${header.anoReferencia}</sb:anoReferencia>
+        <sb:ugResponsavel>${header.ugResponsavel}</sb:ugResponsavel>
+        <sb:cpfResponsavel>${limparNumero(header.cpfResponsavel)}</sb:cpfResponsavel>
+    </sb:header>
+
+    <sb:detalhes>
+`;
+
+    let contador = 0;
+
+    dados.forEach((linha, index) => {
+        try {
+
+            let credor = limparNumero(linha["Credor"]);
+            let chave = linha["Chave Pix"];
+            let tipo = (linha["Tipo Chave"] || "CPF").toUpperCase();
+
+            if (!credor) throw new Error("Credor obrigatório");
+            if (!chave) throw new Error("Chave Pix obrigatória");
+
+            const tiposValidos = ["CPF", "CNPJ", "EMAIL", "TELEFONE", "EVP"];
+            if (!tiposValidos.includes(tipo)) {
+                throw new Error("Tipo de chave inválido");
+            }
+
+            contador++;
+
+            xml += `
+        <sb:detalhe>
+            <ns2:tabAlterarChavesPix>
+                <paramAlterarChavesPix>
+
+                    <credor>${credor}</credor>
+
+                    <chavePix>
+                        <tipoChave>${tipo}</tipoChave>
+                        <chave>${chave}</chave>
+                    </chavePix>
+
+                </paramAlterarChavesPix>
+            </ns2:tabAlterarChavesPix>
+        </sb:detalhe>
+`;
+
+        } catch (erro) {
+            throw new Error(`Erro na linha ${index + 2}: ${erro.message}`);
+        }
+    });
+
+    xml += `
+    </sb:detalhes>
+
+    <sb:trailler>
+        <sb:quantidadeDetalhe>${contador}</sb:quantidadeDetalhe>
+    </sb:trailler>
+
+</sb:arquivo>`;
+
+    baixarXML(xml);
 }
     
 
@@ -129,7 +213,7 @@ function gerarPredocOB(linha, cpf) {
 }
 
 
-    function gerarXML(dados, header)  {
+    function gerarXML_DH(dados, header)  {
 
     let xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sb:arquivo xmlns:ns2="http://services.docHabil.cpr.siafi.tesouro.fazenda.gov.br/" xmlns:sb="http://www.tesouro.gov.br/siafi/submissao">
