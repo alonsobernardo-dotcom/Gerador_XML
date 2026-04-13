@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0a3d62, #3c6382);
+    background: linear-gradient(135deg, #8ac5f0, #cde3f4);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -23,18 +23,18 @@ body {
 /* LADO ESQUERDO */
 .left {
     width: 40%;
-    background: #1e3799;
-    color: white;
+    background: linear-gradient(135deg, #fafbfc, #afb0b0);
+    color: rgb(10, 10, 10);
     padding: 40px;
 }
 
 .left h1 {
     margin: 0;
-    font-size: 40px;
+    font-size: 36px;
 }
 
 .left p {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 14px;
 }
 
@@ -50,9 +50,10 @@ body {
 }
 
 .right h4 {
-    margin-bottom: 10px;
-    font-size: 10px;
-    text-align: center ;
+    margin-top: 15px;
+    font-size: 11px;
+    text-align: center;
+    color: rgb(253, 9, 9);
 }
 
 label {
@@ -64,17 +65,25 @@ label {
 
 input {
     width: 100%;
-    padding: 8px;
+    padding: 9px;
     margin-top: 5px;
     border-radius: 8px;
     border: 1px solid #ccc;
+    transition: 0.2s;
 }
 
-/* BOTÕES */
+input:focus {
+    outline: none;
+    border-color: #5c97ef;
+    box-shadow: 0 0 5px rgba(92,151,239,0.5);
+}
+
+/* BOTÃO PRINCIPAL */
 button {
+    display: block;
     width: 100%;
-    padding: 12px;
     margin-top: 15px;
+    padding: 12px;
     border: none;
     border-radius: 25px;
     cursor: pointer;
@@ -82,7 +91,7 @@ button {
 }
 
 .primary {
-    background: #1e3799;
+    background: #5c97ef;
     color: white;
 }
 
@@ -90,10 +99,26 @@ button {
     background: #0c2461;
 }
 
-.secondary {
-    background: #dcdde1;
+/* CONTAINER DOS BOTÕES DE DOWNLOAD */
+.botoes-download {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-.secondary:hover {
+/* BOTÕES COMO LINK (DOWNLOAD) */
+.botoes-download a {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    background: #dcdde1;
+    color: black;
+    transition: 0.2s;
+}
+
+.botoes-download a:hover {
     background: #c8d6e5;
 }

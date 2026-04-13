@@ -20,6 +20,9 @@
             <p>
                 Suporta OBC e OBPIX.
             </p>
+            <p>
+                Layouts DH001 e CH001.
+            </p>
         </div>
 
         <!-- LADO DIREITO -->
@@ -28,7 +31,7 @@
             <h2>Preencha os dados abaixo:</h2>
 
             <label>Código Layout</label>
-            <input type="text" id="codigoLayout" value="DH001">
+            <input type="text" id="codigoLayout" >
 
             <label>Data Geração</label>
             <input type="date" id="dataGeracao">
@@ -50,8 +53,17 @@
             <label>Planilha</label>
             <input type="file" id="arquivo">
 
-            <button class="primary" onclick="processar()">Gerar XML</button>
-            <button class="secondary" onclick="baixarModelo()">Baixar Modelo</button>
+            <button  class="primary" onclick="processar()">Gerar XML</button>
+            
+            <div class="botoes-download">
+    <a href="modelo_OBPIX.xlsx" download>
+        Modelo DH001
+    </a>
+
+    <a href="modelo_CH001.xlsx" download>
+        Modelo CH001
+    </a>
+</div>
 
              <h4>Importante: Não altere o cabeçalho das colunas!</h4>
 

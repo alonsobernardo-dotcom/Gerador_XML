@@ -339,39 +339,52 @@ function formatarDataISO(data) {
 
     let d;
 
-    // 🔹 Caso seja número (Excel)
+    // 🔹 Número (Excel)
     if (typeof data === "number") {
         let excelEpoch = new Date(1899, 11, 30);
         d = new Date(excelEpoch.getTime() + data * 86400000);
     }
 
-    // 🔹 Caso seja string no formato BR (dd/mm/yyyy)
+    // 🔹 String BR (dd/mm/yyyy ou dd/mm/yy)
     else if (typeof data === "string" && data.includes("/")) {
         let partes = data.split("/");
+
         if (partes.length === 3) {
             let dia = partes[0];
             let mes = partes[1];
             let ano = partes[2];
+
+            // 🔥 Corrige ano com 2 dígitos
+            if (ano.length === 2) {
+                ano = "20" + ano;
+            }
+
             return `${ano}-${mes.padStart(2, "0")}-${dia.padStart(2, "0")}`;
         }
+
         return "";
     }
 
-    // 🔹 Caso ISO ou outro formato válido
+    // 🔹 Outros formatos
     else {
         d = new Date(data);
     }
 
     if (!d || isNaN(d)) return "";
 
-    // 🔹 Formatar manual (sem UTC)
     let ano = d.getFullYear();
+
+    // 🔥 Garantia extra (caso venha 26)
+    if (ano < 100) {
+        ano = 2000 + ano;
+    }
+
     let mes = String(d.getMonth() + 1).padStart(2, "0");
     let dia = String(d.getDate()).padStart(2, "0");
 
     return `${ano}-${mes}-${dia}`;
 }
-}
+
 function formatarDataBR(data) {
 
     if (!data) return "";
@@ -393,30 +406,25 @@ function baixarXML(conteudo) {
     link.click();
 }
 
-function baixarModelo() {
+function baixarModeloDH001() {
     let link = document.createElement("a");
     link.href = "modelo_OBPIX.xlsx";
     link.download = "modelo_OBPIX.xlsx";
+
+    document.body.appendChild(link); // 👈 importante
     link.click();
+    document.body.removeChild(link); // limpeza
+}
+
+function baixarModeloCH001() {
+    let link = document.createElement("a");
+    link.href = "modelo_CH001.xlsx";
+    link.download = "modelo_CH001.xlsx";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 
-let dropzone = document.getElementById("dropzone");
-let fileInput = document.getElementById("arquivo");
 
-dropzone.addEventListener("click", () => fileInput.click());
-
-dropzone.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropzone.style.borderColor = "#0c326f";
-});
-
-dropzone.addEventListener("dragleave", () => {
-    dropzone.style.borderColor = "#aaa";
-});
-
-dropzone.addEventListener("drop", (e) => {
-    e.preventDefault();
-    fileInput.files = e.dataTransfer.files;
-    dropzone.innerText = e.dataTransfer.files[0].name;
-});
