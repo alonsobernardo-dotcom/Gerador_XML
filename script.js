@@ -337,19 +337,40 @@ function formatarDataISO(data) {
 
     if (!data) return "";
 
+    let d;
+
     // 🔹 Caso seja número (Excel)
     if (typeof data === "number") {
         let excelEpoch = new Date(1899, 11, 30);
-        let result = new Date(excelEpoch.getTime() + data * 86400000);
-        return result.toISOString().split("T")[0];
+        d = new Date(excelEpoch.getTime() + data * 86400000);
     }
 
-    // 🔹 Caso seja string/data normal
-    let d = new Date(data);
+    // 🔹 Caso seja string no formato BR (dd/mm/yyyy)
+    else if (typeof data === "string" && data.includes("/")) {
+        let partes = data.split("/");
+        if (partes.length === 3) {
+            let dia = partes[0];
+            let mes = partes[1];
+            let ano = partes[2];
+            return `${ano}-${mes.padStart(2, "0")}-${dia.padStart(2, "0")}`;
+        }
+        return "";
+    }
 
-    if (isNaN(d)) return "";
+    // 🔹 Caso ISO ou outro formato válido
+    else {
+        d = new Date(data);
+    }
 
-    return d.toISOString().split("T")[0];
+    if (!d || isNaN(d)) return "";
+
+    // 🔹 Formatar manual (sem UTC)
+    let ano = d.getFullYear();
+    let mes = String(d.getMonth() + 1).padStart(2, "0");
+    let dia = String(d.getDate()).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
+}
 }
 function formatarDataBR(data) {
 
